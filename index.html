@@ -953,6 +953,33 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--color-accent);
         }
+        .main-footer {
+  background: #040714;
+  border-top: 1px solid rgba(0, 255, 255, 0.2);
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #9da4c2;
+}
+
+.main-footer .footer-content p {
+  margin: 4px 0;
+}
+
+.site-credit {
+  opacity: 0.8;
+  font-size: 0.8rem;
+}
+
+.site-credit span {
+  color: #00e6ff;
+  font-weight: 600;
+}
+
+.site-credit:hover {
+  opacity: 1;
+}
+
     </style>
 </head>
 <body>
@@ -2018,5 +2045,13 @@
         // Initialize on load
         window.addEventListener('load', init);
     </script>
+    <footer class="main-footer">
+  <div class="footer-content">
+    <p>© 2025 CyberSense GameHub. All rights reserved.</p>
+    <p class="site-credit">
+      Designed & developed by <span>Ali Siam</span> – Cyber Security Enthusiast
+    </p>
+  </div>
+</footer>
 </body>
 </html>
