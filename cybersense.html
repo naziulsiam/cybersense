@@ -1,0 +1,2022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSense GameHub - Learn Cybersecurity Through Games</title>
+    <style>
+        :root {
+            --color-bg-primary: #0a0e27;
+            --color-bg-secondary: #141829;
+            --color-bg-tertiary: #1a1f3a;
+            --color-primary: #00d9ff;
+            --color-primary-dark: #0099cc;
+            --color-accent: #ff006e;
+            --color-accent-light: #ff4d9f;
+            --color-success: #00ff41;
+            --color-warning: #ffa500;
+            --color-error: #ff0055;
+            --color-text: #e0e0ff;
+            --color-text-secondary: #a0a0cc;
+            --glow-primary: 0 0 20px rgba(0, 217, 255, 0.5);
+            --glow-accent: 0 0 20px rgba(255, 0, 110, 0.5);
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--color-bg-primary) 0%, #1a0033 50%, var(--color-bg-primary) 100%);
+            color: var(--color-text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 14, 39, 0.95);
+            border-bottom: 2px solid var(--color-primary);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0, 217, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--color-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--color-bg-primary);
+            font-size: 20px;
+        }
+
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .player-badge {
+            background: var(--color-bg-tertiary);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid var(--color-primary);
+            font-size: 13px;
+        }
+
+        .sound-toggle {
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-primary);
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--color-text);
+        }
+
+        .sound-toggle:hover {
+            box-shadow: var(--glow-primary);
+        }
+
+        /* Main Container */
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background: rgba(20, 24, 41, 0.8);
+            border-right: 1px solid rgba(0, 217, 255, 0.2);
+            padding: 30px 0;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: var(--transition);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item.active {
+            border-left-color: var(--color-primary);
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--color-primary);
+        }
+
+        .nav-item:hover {
+            background: rgba(0, 217, 255, 0.05);
+            color: var(--color-primary);
+        }
+
+        .nav-icon {
+            font-size: 18px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 40px;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-tertiary));
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 12px;
+            padding: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .game-card:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-primary);
+            transform: translateY(-5px);
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .game-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .game-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--color-primary);
+        }
+
+        .game-desc {
+            font-size: 13px;
+            color: var(--color-text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent-light));
+            border: none;
+            color: var(--color-bg-primary);
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 13px;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: var(--glow-primary);
+        }
+
+        /* Game Screen */
+        .game-screen {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .game-title-large {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .back-btn {
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            box-shadow: var(--glow-primary);
+        }
+
+        /* Quiz */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--color-bg-tertiary);
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            border-radius: 10px;
+            transition: width 0.4s ease;
+        }
+
+        .question-container {
+            background: var(--color-bg-tertiary);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 25px;
+            color: var(--color-primary);
+        }
+
+        .option-btn {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: var(--color-bg-secondary);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            color: var(--color-text);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .option-btn:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-primary);
+            transform: translateX(5px);
+        }
+
+        .option-btn.selected {
+            border-color: var(--color-primary);
+            background: rgba(0, 217, 255, 0.1);
+        }
+
+        .option-btn.correct {
+            border-color: var(--color-success);
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--color-success);
+        }
+
+        .option-btn.incorrect {
+            border-color: var(--color-error);
+            background: rgba(255, 0, 85, 0.1);
+            color: var(--color-error);
+        }
+
+        /* Phishing Game */
+        .message-card {
+            background: var(--color-bg-tertiary);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .message-type {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .message-content {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            color: var(--color-text);
+        }
+
+        .phish-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .phish-btn {
+            padding: 12px 20px;
+            border: 2px solid;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .phish-btn.real {
+            border-color: var(--color-success);
+            color: var(--color-success);
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        .phish-btn.real:hover {
+            background: rgba(0, 255, 65, 0.15);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .phish-btn.fake {
+            border-color: var(--color-error);
+            color: var(--color-error);
+            background: rgba(255, 0, 85, 0.05);
+        }
+
+        .phish-btn.fake:hover {
+            background: rgba(255, 0, 85, 0.15);
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+        }
+
+        /* Feedback Box */
+        .feedback-box {
+            background: var(--color-bg-tertiary);
+            border: 1px solid;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            animation: slideUp 0.4s ease;
+        }
+
+        .feedback-box.correct {
+            border-color: var(--color-success);
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .feedback-box.incorrect {
+            border-color: var(--color-error);
+            background: rgba(255, 0, 85, 0.1);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feedback-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .feedback-text {
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Password Meter */
+        .password-input-group {
+            margin-bottom: 25px;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 15px;
+            background: var(--color-bg-tertiary);
+            border: 2px solid rgba(0, 217, 255, 0.2);
+            border-radius: 8px;
+            color: var(--color-text);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-primary);
+        }
+
+        .strength-meter {
+            height: 8px;
+            background: var(--color-bg-tertiary);
+            border-radius: 10px;
+            margin-top: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 217, 255, 0.2);
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--color-error);
+            transition: width 0.4s ease, background 0.4s ease;
+        }
+
+        .strength-bar.weak {
+            background: var(--color-error);
+            width: 20%;
+        }
+
+        .strength-bar.fair {
+            background: var(--color-warning);
+            width: 50%;
+        }
+
+        .strength-bar.good {
+            background: #00aa66;
+            width: 75%;
+        }
+
+        .strength-bar.strong {
+            background: var(--color-success);
+            width: 100%;
+        }
+
+        .strength-text {
+            font-size: 12px;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .strength-criteria {
+            font-size: 12px;
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .criteria-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--color-text-secondary);
+        }
+
+        .criteria-check {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid currentColor;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+        }
+
+        .criteria-item.met {
+            color: var(--color-success);
+        }
+
+        .criteria-item.met .criteria-check {
+            background: var(--color-success);
+            color: var(--color-bg-primary);
+        }
+
+        /* Scenario Game */
+        .scenario-content {
+            background: var(--color-bg-tertiary);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .scenario-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: var(--color-text);
+        }
+
+        .choice-btn {
+            width: 100%;
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            background: var(--color-bg-secondary);
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            color: var(--color-text);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+            text-align: left;
+        }
+
+        .choice-btn:hover {
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-primary);
+            transform: translateX(5px);
+        }
+
+        .outcome-box {
+            background: var(--color-bg-secondary);
+            border-left: 4px solid;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            animation: slideUp 0.4s ease;
+        }
+
+        .outcome-box.good {
+            border-color: var(--color-success);
+            background: rgba(0, 255, 65, 0.05);
+        }
+
+        .outcome-box.bad {
+            border-color: var(--color-error);
+            background: rgba(255, 0, 85, 0.05);
+        }
+
+        .outcome-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .outcome-text {
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* Memory Match */
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--color-bg-secondary), var(--color-bg-tertiary));
+            border: 2px solid rgba(0, 217, 255, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 12px;
+            text-align: center;
+            padding: 10px;
+            color: transparent;
+        }
+
+        .memory-card:hover:not(.matched) {
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-primary);
+            transform: scale(1.05);
+        }
+
+        .memory-card.flipped {
+            color: var(--color-primary);
+            background: rgba(0, 217, 255, 0.1);
+            border-color: var(--color-primary);
+        }
+
+        .memory-card.matched {
+            border-color: var(--color-success);
+            color: var(--color-success);
+            background: rgba(0, 255, 65, 0.1);
+            cursor: default;
+        }
+
+        /* Leaderboard */
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .leaderboard-table thead tr {
+            background: rgba(0, 217, 255, 0.1);
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        .leaderboard-table th {
+            padding: 15px;
+            text-align: left;
+            color: var(--color-primary);
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .leaderboard-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+            font-size: 14px;
+        }
+
+        .leaderboard-table tr:hover {
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .rank-badge.gold {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            border: 2px solid #ffd700;
+        }
+
+        .rank-badge.silver {
+            background: rgba(192, 192, 192, 0.2);
+            color: #c0c0c0;
+            border: 2px solid #c0c0c0;
+        }
+
+        .rank-badge.bronze {
+            background: rgba(205, 127, 50, 0.2);
+            color: #cd7f32;
+            border: 2px solid #cd7f32;
+        }
+
+        /* Score Summary */
+        .score-summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .score-box {
+            background: var(--color-bg-tertiary);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 10px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--color-text-secondary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .score-value {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Confetti Animation */
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--color-primary);
+            pointer-events: none;
+            animation: confetti-fall 3s ease-in forwards;
+        }
+
+        /* Avatar Selector */
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .avatar-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 217, 255, 0.2);
+            background: var(--color-bg-tertiary);
+            cursor: pointer;
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .avatar-option:hover {
+            border-color: var(--color-primary);
+            transform: scale(1.1);
+        }
+
+        .avatar-option.selected {
+            border-color: var(--color-primary);
+            box-shadow: var(--glow-primary);
+            background: rgba(0, 217, 255, 0.1);
+        }
+
+        /* Learn More Section */
+        .terms-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .term-card {
+            background: var(--color-bg-tertiary);
+            border: 1px solid rgba(0, 217, 255, 0.2);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .term-title {
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .term-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--color-text-secondary);
+        }
+
+        /* Buttons Container */
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-accent-light));
+            color: var(--color-bg-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow-primary);
+        }
+
+        .btn-secondary {
+            background: var(--color-bg-tertiary);
+            border: 1px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 217, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                flex-direction: row;
+                height: auto;
+                padding: 15px;
+                overflow-x: auto;
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+            }
+
+            .nav-item {
+                padding: 10px 15px;
+                white-space: nowrap;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .game-board {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .phish-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .game-header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🛡️</div>
+            <span>CyberSense GameHub</span>
+        </div>
+        <div class="header-info">
+            <div class="player-badge">
+                <span id="playerName">Player</span> | Score: <span id="totalScore">0</span>
+            </div>
+            <button class="sound-toggle" id="soundToggle">🔊 Sound ON</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" data-section="quiz">
+                <span class="nav-icon">❓</span>
+                <span>Quiz Arena</span>
+            </div>
+            <div class="nav-item" data-section="phishing">
+                <span class="nav-icon">🎣</span>
+                <span>Spot the Phish</span>
+            </div>
+            <div class="nav-item" data-section="password">
+                <span class="nav-icon">🔐</span>
+                <span>Password Lab</span>
+            </div>
+            <div class="nav-item" data-section="scenario">
+                <span class="nav-icon">🎬</span>
+                <span>Cyber Stories</span>
+            </div>
+            <div class="nav-item" data-section="memory">
+                <span class="nav-icon">🧠</span>
+                <span>Memory Match</span>
+            </div>
+            <div class="nav-item" data-section="leaderboard">
+                <span class="nav-icon">🏆</span>
+                <span>Leaderboard</span>
+            </div>
+            <div class="nav-item" data-section="learn">
+                <span class="nav-icon">📚</span>
+                <span>Learn More</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="dashboard">
+                <h1 class="game-title-large" style="margin-bottom: 15px;">Welcome to CyberSense GameHub</h1>
+                <p style="color: var(--color-text-secondary); margin-bottom: 40px;">Learn cybersecurity through interactive games designed for age 11+. Choose a game below to start!</p>
+
+                <!-- Avatar Selector -->
+                <div style="margin-bottom: 40px;">
+                    <h3 style="color: var(--color-primary); margin-bottom: 15px;">Choose Your Avatar</h3>
+                    <div class="avatar-grid">
+                        <div class="avatar-option selected" data-avatar="🥸">🥸</div>
+                        <div class="avatar-option" data-avatar="🦸">🦸</div>
+                        <div class="avatar-option" data-avatar="🧠">🧠</div>
+                        <div class="avatar-option" data-avatar="🤖">🤖</div>
+                        <div class="avatar-option" data-avatar="👾">👾</div>
+                        <div class="avatar-option" data-avatar="🎮">🎮</div>
+                    </div>
+                </div>
+
+                <h2 style="color: var(--color-primary); margin-bottom: 25px;">Featured Games</h2>
+                <div class="dashboard-grid">
+                    <div class="game-card" data-game="quiz">
+                        <div class="game-icon">❓</div>
+                        <div class="game-title">Cyber Quiz Arena</div>
+                        <p class="game-desc">Test your cybersecurity knowledge with 20 challenging questions. Multiple choice, timed challenges!</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="phishing">
+                        <div class="game-icon">🎣</div>
+                        <div class="game-title">Spot The Phish</div>
+                        <p class="game-desc">Identify real vs. fake messages. Learn to spot phishing emails, SMS, and scams with detailed feedback.</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="password">
+                        <div class="game-icon">🔐</div>
+                        <div class="game-title">Password Strength Lab</div>
+                        <p class="game-desc">Create strong passwords with real-time strength feedback. Learn what makes passwords secure.</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="scenario">
+                        <div class="game-icon">🎬</div>
+                        <div class="game-title">Cyber Scenario Simulator</div>
+                        <p class="game-desc">Make decisions in interactive stories. Choose your path and learn from good and bad endings!</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="memory">
+                        <div class="game-icon">🧠</div>
+                        <div class="game-title">Memory Match</div>
+                        <p class="game-desc">Match cybersecurity terms with their definitions. Fast-paced memory game with a learning twist.</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="leaderboard">
+                        <div class="game-icon">🏆</div>
+                        <div class="game-title">Leaderboard</div>
+                        <p class="game-desc">See top scores from all players. Compete for gold, silver, and bronze rankings!</p>
+                        <button class="play-btn">View Scores</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz Section -->
+            <section class="content-section" id="quiz">
+                <div class="game-header">
+                    <h1 class="game-title-large">Cyber Quiz Arena</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen" id="quizScreen">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quizProgress" style="width: 0%"></div>
+                    </div>
+                    <div class="question-container" id="quizContainer"></div>
+                    <button class="btn btn-primary" id="nextQuizBtn" style="width: 100%;" onclick="nextQuestion()">Next Question</button>
+                </div>
+                <div id="quizSummary" style="display: none; animation: fadeIn 0.5s ease;">
+                    <h2 style="color: var(--color-primary); margin-bottom: 30px;">Quiz Complete!</h2>
+                    <div class="score-summary">
+                        <div class="score-box">
+                            <div class="score-label">Your Score</div>
+                            <div class="score-value" id="quizFinalScore">0/20</div>
+                        </div>
+                        <div class="score-box">
+                            <div class="score-label">Accuracy</div>
+                            <div class="score-value" id="quizAccuracy">0%</div>
+                        </div>
+                        <div class="score-box">
+                            <div class="score-label">Performance</div>
+                            <div class="score-value" id="quizPerformance" style="font-size: 24px;">Great!</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="resetQuiz()" style="width: 100%; margin-top: 30px;">Play Again</button>
+                    <button class="btn btn-secondary" onclick="goToDashboard()" style="width: 100%; margin-top: 15px;">Back to Dashboard</button>
+                </div>
+            </section>
+
+            <!-- Phishing Section -->
+            <section class="content-section" id="phishing">
+                <div class="game-header">
+                    <h1 class="game-title-large">Spot The Phish</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <div style="margin-bottom: 20px;">
+                        <span style="color: var(--color-text-secondary);">Message <span id="phishCount">1</span> / 10</span>
+                        <div class="progress-bar" style="margin-top: 10px;">
+                            <div class="progress-fill" id="phishProgress" style="width: 10%"></div>
+                        </div>
+                    </div>
+                    <div id="phishingContainer"></div>
+                    <div id="phishingSummary" style="display: none; animation: fadeIn 0.5s ease;">
+                        <h2 style="color: var(--color-primary); margin-bottom: 30px;">Challenge Complete!</h2>
+                        <div class="score-summary">
+                            <div class="score-box">
+                                <div class="score-label">Correct</div>
+                                <div class="score-value" id="phishScore">0/10</div>
+                            </div>
+                            <div class="score-box">
+                                <div class="score-label">Accuracy</div>
+                                <div class="score-value" id="phishAccuracy">0%</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="resetPhishing()" style="width: 100%; margin-top: 30px;">Try Again</button>
+                        <button class="btn btn-secondary" onclick="goToDashboard()" style="width: 100%; margin-top: 15px;">Back to Dashboard</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Password Lab Section -->
+            <section class="content-section" id="password">
+                <div class="game-header">
+                    <h1 class="game-title-large">Password Strength Lab</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <h2 style="color: var(--color-primary); margin-bottom: 20px;">Test Your Password Strength</h2>
+                    <div class="password-input-group">
+                        <input type="text" id="passwordInput" class="password-input" placeholder="Type a password to test..." oninput="checkPasswordStrength()">
+                        <div class="strength-meter">
+                            <div class="strength-bar" id="strengthBar"></div>
+                        </div>
+                        <div class="strength-text" id="strengthText">Enter a password</div>
+                        <div class="strength-criteria">
+                            <div class="criteria-item" id="crit1">
+                                <div class="criteria-check">✓</div>
+                                <span>8+ chars</span>
+                            </div>
+                            <div class="criteria-item" id="crit2">
+                                <div class="criteria-check">✓</div>
+                                <span>Uppercase</span>
+                            </div>
+                            <div class="criteria-item" id="crit3">
+                                <div class="criteria-check">✓</div>
+                                <span>Numbers</span>
+                            </div>
+                            <div class="criteria-item" id="crit4">
+                                <div class="criteria-check">✓</div>
+                                <span>Special char</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--color-primary); margin: 40px 0 20px 0;">Examples of Weak Passwords</h3>
+                    <div style="background: rgba(255, 0, 85, 0.1); border: 1px solid #ff0055; border-radius: 8px; padding: 20px; margin-bottom: 25px;">
+                        <div style="font-family: monospace; color: #ff0055; margin: 8px 0;">password123</div>
+                        <div style="font-family: monospace; color: #ff0055; margin: 8px 0;">123456</div>
+                        <div style="font-family: monospace; color: #ff0055; margin: 8px 0;">qwerty</div>
+                        <div style="font-family: monospace; color: #ff0055; margin: 8px 0;">john2010</div>
+                        <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 15px;">❌ These are easily guessed or cracked by hackers!</p>
+                    </div>
+
+                    <h3 style="color: var(--color-primary); margin: 40px 0 20px 0;">Example of a Strong Password</h3>
+                    <div style="background: rgba(0, 255, 65, 0.1); border: 1px solid #00ff41; border-radius: 8px; padding: 20px;">
+                        <div style="font-family: monospace; color: #00ff41; margin: 8px 0;">Tr0p!c@lSunset42#Mix</div>
+                        <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 15px;">✓ Long, random, mixed case, numbers, and special characters!</p>
+                    </div>
+
+                    <div style="background: rgba(0, 217, 255, 0.1); border: 1px solid rgba(0, 217, 255, 0.3); border-radius: 8px; padding: 20px; margin-top: 25px;">
+                        <strong>💡 Pro Tip:</strong> Use passphrases like "BlueCar-7-Elephant-Moon!" They're easier to remember and very secure!
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scenario Section -->
+            <section class="content-section" id="scenario">
+                <div class="game-header">
+                    <h1 class="game-title-large">Cyber Scenario Simulator</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen" id="scenarioContainer"></div>
+            </section>
+
+            <!-- Memory Match Section -->
+            <section class="content-section" id="memory">
+                <div class="game-header">
+                    <h1 class="game-title-large">Memory Match</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <div style="margin-bottom: 20px; display: flex; justify-content: space-between;">
+                        <div><span style="color: var(--color-text-secondary);">Matches: <strong id="memoryMatches">0</strong>/6</span></div>
+                        <div><span style="color: var(--color-text-secondary);">Moves: <strong id="memoryMoves">0</strong></span></div>
+                    </div>
+                    <div class="game-board" id="memoryBoard"></div>
+                    <div id="memorySummary" style="display: none; animation: fadeIn 0.5s ease;">
+                        <h2 style="color: var(--color-primary); margin-bottom: 30px;">Game Complete!</h2>
+                        <div class="score-summary">
+                            <div class="score-box">
+                                <div class="score-label">Total Moves</div>
+                                <div class="score-value" id="memoryFinalMoves">0</div>
+                            </div>
+                            <div class="score-box">
+                                <div class="score-label">Performance</div>
+                                <div class="score-value" id="memoryPerformance" style="font-size: 24px;">Good!</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="resetMemory()" style="width: 100%; margin-top: 30px;">Play Again</button>
+                        <button class="btn btn-secondary" onclick="goToDashboard()" style="width: 100%; margin-top: 15px;">Back to Dashboard</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leaderboard Section -->
+            <section class="content-section" id="leaderboard">
+                <div class="game-header">
+                    <h1 class="game-title-large">Global Leaderboard</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <p style="color: var(--color-text-secondary); margin-bottom: 25px;">Top 10 players based on overall score</p>
+                    <table class="leaderboard-table" id="leaderboardTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 50px;">Rank</th>
+                                <th>Player</th>
+                                <th style="width: 120px;">Score</th>
+                                <th style="width: 150px;">Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody">
+                        </tbody>
+                    </table>
+                    <button class="btn btn-secondary" onclick="goToDashboard()" style="width: 100%; margin-top: 30px;">Back to Dashboard</button>
+                </div>
+            </section>
+
+            <!-- Learn More Section -->
+            <section class="content-section" id="learn">
+                <div class="game-header">
+                    <h1 class="game-title-large">Learn Cybersecurity Basics</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <p style="color: var(--color-text-secondary); margin-bottom: 30px;">Understand key cybersecurity terms and concepts</p>
+                    <div class="terms-grid" id="termsGrid"></div>
+                    <button class="btn btn-secondary" onclick="goToDashboard()" style="width: 100%; margin-top: 30px;">Back to Dashboard</button>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        // ========== STATE & CONFIG ==========
+        const gameState = {
+            soundEnabled: true,
+            playerName: 'Player',
+            playerAvatar: '🥸',
+            totalScore: 0,
+            currentAvatar: '🥸'
+        };
+
+        const quizQuestions = [
+            { q: "What is phishing?", a: "Sending fake emails pretending to be from trusted sources", opts: ["Fishing in the ocean", "Sending fake emails pretending to be from trusted sources", "A type of fish", "Internet speed"] },
+            { q: "Which is a strong password?", a: "Blue$Car7-Moon2024!", opts: ["password123", "Blue$Car7-Moon2024!", "12345678", "abcdefgh"] },
+            { q: "What does VPN stand for?", a: "Virtual Private Network", opts: ["Very Popular Nickname", "Virtual Private Network", "Video Protocol Number", "Viral Private Network"] },
+            { q: "What is malware?", a: "Malicious software designed to harm your computer", opts: ["A type of hair gel", "Malicious software designed to harm your computer", "A brand of clothing", "A social media platform"] },
+            { q: "What should you do if you see a suspicious link?", a: "Don't click it and report it", opts: ["Click it to see what it is", "Don't click it and report it", "Forward it to your friends", "Download the file"] },
+            { q: "Which is a phishing red flag?", a: "Asking for passwords via email", opts: ["Professional signature", "Asking for passwords via email", "Recent date", "Company logo"] },
+            { q: "What is two-factor authentication?", a: "Using two ways to verify your identity", opts: ["Using two passwords", "Using two ways to verify your identity", "Logging in twice", "Two internet connections"] },
+            { q: "What is ransomware?", a: "Software that locks your files and demands payment", opts: ["A type of RAM", "Software that locks your files and demands payment", "Random software", "A gaming application"] },
+            { q: "How often should you update passwords?", a: "Regularly, especially after suspicious activity", opts: ["Never", "Once a year", "Regularly, especially after suspicious activity", "Only on Fridays"] },
+            { q: "What is social engineering?", a: "Manipulating people into revealing confidential info", opts: ["Building social networks", "Manipulating people into revealing confidential info", "Social media engineering", "Group psychology"] },
+            { q: "What does HTTPS mean?", a: "A secure version of HTTP with encryption", opts: ["Hyper Text Transfer Process", "A secure version of HTTP with encryption", "High Speed Internet", "Home Transfer Service"] },
+            { q: "Which is NOT a common phishing method?", a: "Using quantum computers", opts: ["Fake email addresses", "SMS messages", "Using quantum computers", "Fake websites"] },
+            { q: "What is a firewall?", a: "Software/hardware that blocks unauthorized access", opts: ["A wall made of fire", "Software/hardware that blocks unauthorized access", "A type of antivirus", "A backup system"] },
+            { q: "Should you share your password with anyone?", a: "Never, not even your best friend", opts: ["Yes, with best friends", "Yes, with family", "Never, not even your best friend", "Yes, if they ask nicely"] },
+            { q: "What is cryptography?", a: "The practice of secure communication using codes", opts: ["A type of currency", "The practice of secure communication using codes", "Breaking codes", "A programming language"] },
+            { q: "What is a data breach?", a: "Unauthorized access to confidential information", opts: ["Breaking your computer", "Unauthorized access to confidential information", "Fast internet breach", "Security update"] },
+            { q: "Which password is strongest?", a: "Tr0p!c@lSunset-42", opts: ["abc123456", "Tr0p!c@lSunset-42", "letmein", "welcome"] },
+            { q: "What is antivirus software?", a: "Software that detects and removes malicious programs", opts: ["A virus made of ants", "Software that detects and removes malicious programs", "A type of firewall", "Internet speed booster"] },
+            { q: "Why is public WiFi dangerous?", a: "Hackers can intercept unencrypted data", opts: ["It's slow", "Hackers can intercept unencrypted data", "It has bad weather", "It's for public use only"] },
+            { q: "What should you do with old devices?", a: "Securely wipe data before disposing", opts: ["Throw them in the trash", "Securely wipe data before disposing", "Leave them on the porch", "Give them away without erasing"] }
+        ];
+
+        const phishingMessages = [
+            {
+                type: "Email",
+                msg: "Subject: Your Account Has Been Compromised!\nDear Valued Customer,\nWe detected unusual activity on your account. Click here immediately to verify your password.\nClick Link: secure-verify.com/reset\n- PayPal Security Team",
+                answer: "Fake",
+                explain: "Red flags: Urgency, asking for password, suspicious domain (secure-verify vs official paypal.com)"
+            },
+            {
+                type: "SMS",
+                msg: "🎉 Congratulations! You've won a FREE iPhone 15! Click: free-iphone.link/claim to claim your prize!",
+                answer: "Fake",
+                explain: "Red flags: Unsolicited prize, suspicious link, too good to be true offers are classic phishing"
+            },
+            {
+                type: "Email",
+                msg: "Hi,\nYour invoice #12345 is ready. Please review the attached PDF.\nBest regards,\nAcme Company Billing",
+                answer: "Real",
+                explain: "This looks legitimate: Professional tone, specific reference number, normal business communication"
+            },
+            {
+                type: "WhatsApp",
+                msg: "Hi! It's me, your bank. Your card was declined. Reply with your card number and CVV to reactivate it.",
+                answer: "Fake",
+                explain: "Red flags: Banks NEVER ask for CVV via message, casual tone for financial request, unsecured channel"
+            },
+            {
+                type: "Email",
+                msg: "Microsoft Account Security Alert\nWe detected a sign-in from a new location. Confirm it was you: https://account.microsoft.com/security\n(This email was sent from Microsoft Security team)",
+                answer: "Real",
+                explain: "Legitimate: Official Microsoft domain, security-focused, proper branding, no password request"
+            },
+            {
+                type: "Email",
+                msg: "ACTION REQUIRED: Your Google Account needs verification. Your account will be suspended in 24 hours unless you verify: click-here-now.org/google",
+                answer: "Fake",
+                explain: "Red flags: Extreme urgency, threat of suspension, incorrect domain, Google wouldn't use this format"
+            },
+            {
+                type: "Email",
+                msg: "Dear Valued Employee,\nPlease submit your Q4 expenses report by Friday using this form.\nThanks,\nHR Department",
+                answer: "Real",
+                explain: "Legitimate: Internal company communication, clear purpose, normal deadline, professional tone"
+            },
+            {
+                type: "SMS",
+                msg: "ALERT: Unusual activity detected on your Netflix account. Verify your account now: netflix-security.net/verify",
+                answer: "Fake",
+                explain: "Red flags: Urgent alert, suspicious domain (not netflix.com), generic greeting, common phishing tactic"
+            },
+            {
+                type: "Email",
+                msg: "Thank you for your Amazon purchase! Your order has been dispatched. Track it here: amazon.com/orders/track",
+                answer: "Real",
+                explain: "Legitimate: Correct domain (amazon.com), expected order confirmation, normal shipping notification"
+            },
+            {
+                type: "Email",
+                msg: "URGENT: Your Roblox account has been locked due to suspicious activity. Confirm your login immediately or lose your account: roblox-verify.ru/login",
+                answer: "Fake",
+                explain: "Red flags: Extreme urgency, threat of account loss, Russian domain (.ru), not official Roblox domain"
+            }
+        ];
+
+        const scenarios = [
+            {
+                title: "The Mysterious Pop-up",
+                story: "You're browsing the web and a pop-up appears: 'CLAIM YOUR FREE ROBUX! You've been chosen as our lucky winner! Click here to claim your prize!'",
+                choices: [
+                    { text: "Click on the pop-up to claim your Robux", outcome: "bad", result: "❌ Oh no! The pop-up was a trap. It downloaded malware that slowed down your computer. Always be suspicious of 'free' offers!" },
+                    { text: "Close the pop-up and ignore it", outcome: "good", result: "✓ Great decision! Pop-ups offering free items are usually scams. You protected your device by ignoring it!" },
+                    { text: "Tell a trusted adult about the suspicious pop-up", outcome: "good", result: "✓ Excellent! Reporting suspicious activity to trusted adults is a smart cybersecurity move!" }
+                ]
+            },
+            {
+                title: "The Friend Request Mystery",
+                story: "Someone claiming to be your friend sends you a message: 'Hey! Check out this video link, it's hilarious!' But the link looks suspicious.",
+                choices: [
+                    { text: "Click the link to see what it is", outcome: "bad", result: "❌ Uh oh! It was a phishing link. Your account info could be stolen. Always verify with your friend directly!" },
+                    { text: "Ask your friend directly if they sent the message", outcome: "good", result: "✓ Smart! Verifying suspicious messages with the actual person is a great security practice!" },
+                    { text: "Report and block the account", outcome: "good", result: "✓ Perfect! Reporting suspicious accounts helps protect you and others from scammers!" }
+                ]
+            },
+            {
+                title: "The Urgent Email",
+                story: "You receive an email from 'your bank' saying: 'Your account has been compromised! Click here IMMEDIATELY to verify your password.'",
+                choices: [
+                    { text: "Click the link and enter your password", outcome: "bad", result: "❌ Danger! This was a phishing email. Real banks never ask for passwords via email. Your account could be stolen!" },
+                    { text: "Call your bank's official number to verify", outcome: "good", result: "✓ Excellent! Calling the official phone number is the safest way to verify bank communications!" },
+                    { text: "Ignore the email and check your account directly", outcome: "good", result: "✓ Great thinking! Going directly to the bank's website (not through email links) is the secure way!" }
+                ]
+            }
+        ];
+
+        const memoryCards = [
+            { term: "Phishing", def: "Fake emails tricking you" },
+            { term: "Malware", def: "Harmful software" },
+            { term: "VPN", def: "Secure private connection" },
+            { term: "Firewall", def: "Blocks unauthorized access" },
+            { term: "Encryption", def: "Scrambles data securely" },
+            { term: "Password", def: "Secret access code" }
+        ];
+
+        const cyberTerms = [
+            { title: "Phishing", desc: "Fraudulent attempts to obtain sensitive information by disguising as trustworthy sources. Example: Fake emails pretending to be from your bank." },
+            { title: "Malware", desc: "Malicious software designed to damage, disable, or gain unauthorized access to computers. Includes viruses, worms, and trojans." },
+            { title: "Ransomware", desc: "Software that encrypts your files and demands payment to unlock them. Never pay - contact authorities instead." },
+            { title: "VPN", desc: "Virtual Private Network - encrypts your connection and hides your IP address, protecting your privacy online." },
+            { title: "Firewall", desc: "A security system that monitors and controls incoming and outgoing network traffic." },
+            { title: "Encryption", desc: "Converting information into a code to prevent unauthorized access. Only those with the key can read it." },
+            { title: "Two-Factor Authentication", desc: "Using two methods to verify your identity (e.g., password + fingerprint) for extra security." },
+            { title: "Password Manager", desc: "Software that securely stores and organizes all your passwords, helping you use unique passwords everywhere." }
+        ];
+
+        // ========== INITIALIZATION ==========
+        function init() {
+            loadLeaderboard();
+            setupEventListeners();
+            setupQuiz();
+            setupPhishing();
+            setupMemory();
+            setupScenarios();
+            setupLearnMore();
+        }
+
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const section = this.dataset.section;
+                    showSection(section);
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Game cards
+            document.querySelectorAll('.game-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const game = this.dataset.game;
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    document.querySelector(`[data-section="${game}"]`).classList.add('active');
+                    showSection(game);
+                });
+            });
+
+            // Avatar selector
+            document.querySelectorAll('.avatar-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    document.querySelectorAll('.avatar-option').forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    gameState.playerAvatar = this.dataset.avatar;
+                    document.querySelector('.player-badge').textContent = `${gameState.playerAvatar} Player | Score: ${gameState.totalScore}`;
+                });
+            });
+
+            // Sound toggle
+            document.getElementById('soundToggle').addEventListener('click', function() {
+                gameState.soundEnabled = !gameState.soundEnabled;
+                this.textContent = gameState.soundEnabled ? '🔊 Sound ON' : '🔇 Sound OFF';
+            });
+
+            // Player name from localStorage
+            const savedName = localStorage.getItem('playerName');
+            if (savedName) {
+                gameState.playerName = savedName;
+                document.getElementById('playerName').textContent = gameState.playerName;
+            }
+        }
+
+        // ========== SECTION NAVIGATION ==========
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function goToDashboard() {
+            showSection('dashboard');
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            document.querySelector('[data-section="dashboard"]').classList.add('active');
+        }
+
+        // ========== QUIZ GAME ==========
+        let currentQuestion = 0;
+        let quizScore = 0;
+        let quizAnswered = false;
+
+        function setupQuiz() {
+            showQuizQuestion();
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            quizScore = 0;
+            quizAnswered = false;
+            document.getElementById('quizScreen').style.display = 'block';
+            document.getElementById('quizSummary').style.display = 'none';
+            showQuizQuestion();
+        }
+
+        function showQuizQuestion() {
+            const q = quizQuestions[currentQuestion];
+            let optionsHTML = q.opts.map((opt, i) => 
+                `<button class="option-btn" onclick="selectAnswer(${i}, '${opt}', '${q.a}')">${opt}</button>`
+            ).join('');
+
+            document.getElementById('quizContainer').innerHTML = `
+                <div class="question-text">Question ${currentQuestion + 1} / ${quizQuestions.length}</div>
+                <div style="font-size: 18px; margin-bottom: 25px;">${q.q}</div>
+                ${optionsHTML}
+            `;
+
+            const progress = ((currentQuestion) / quizQuestions.length) * 100;
+            document.getElementById('quizProgress').style.width = progress + '%';
+            document.getElementById('nextQuizBtn').disabled = true;
+            document.getElementById('nextQuizBtn').style.opacity = '0.5';
+            quizAnswered = false;
+        }
+
+        function selectAnswer(index, selected, correct) {
+            if (quizAnswered) return;
+            quizAnswered = true;
+
+            const buttons = document.querySelectorAll('.option-btn');
+            buttons.forEach((btn, i) => {
+                if (btn.textContent === correct) {
+                    btn.classList.add('correct');
+                }
+                if (btn.textContent === selected && selected !== correct) {
+                    btn.classList.add('incorrect');
+                }
+                btn.style.pointerEvents = 'none';
+            });
+
+            if (selected === correct) {
+                quizScore++;
+                playSound('correct');
+                showFeedback('Correct! Great job!', 'correct');
+            } else {
+                playSound('incorrect');
+                showFeedback(`Incorrect. The correct answer is: ${correct}`, 'incorrect');
+            }
+
+            document.getElementById('nextQuizBtn').disabled = false;
+            document.getElementById('nextQuizBtn').style.opacity = '1';
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < quizQuestions.length) {
+                showQuizQuestion();
+            } else {
+                endQuiz();
+            }
+        }
+
+        function endQuiz() {
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('quizSummary').style.display = 'block';
+
+            const score = quizScore;
+            const accuracy = Math.round((score / quizQuestions.length) * 100);
+            let performance = 'Excellent!';
+            if (accuracy < 50) performance = 'Keep Learning!';
+            else if (accuracy < 70) performance = 'Good Effort!';
+            else if (accuracy < 90) performance = 'Great!';
+
+            document.getElementById('quizFinalScore').textContent = `${score}/${quizQuestions.length}`;
+            document.getElementById('quizAccuracy').textContent = accuracy + '%';
+            document.getElementById('quizPerformance').textContent = performance;
+
+            gameState.totalScore += score * 5;
+            updateScore();
+            saveToLeaderboard();
+            playSound('complete');
+            createConfetti();
+        }
+
+        // ========== PHISHING GAME ==========
+        let currentPhish = 0;
+        let phishScore = 0;
+        let phishAnswered = false;
+
+        function setupPhishing() {
+            showPhishingMessage();
+        }
+
+        function resetPhishing() {
+            currentPhish = 0;
+            phishScore = 0;
+            phishAnswered = false;
+            document.getElementById('phishingContainer').innerHTML = '';
+            document.getElementById('phishingSummary').style.display = 'none';
+            showPhishingMessage();
+        }
+
+        function showPhishingMessage() {
+            const msg = phishingMessages[currentPhish];
+            document.getElementById('phishCount').textContent = currentPhish + 1;
+            document.getElementById('phishProgress').style.width = ((currentPhish + 1) / phishingMessages.length) * 100 + '%';
+
+            document.getElementById('phishingContainer').innerHTML = `
+                <div class="message-card">
+                    <div class="message-type">${msg.type}</div>
+                    <div class="message-content">${msg.msg.replace(/\n/g, '<br>')}</div>
+                    <div class="phish-buttons">
+                        <button class="phish-btn real" onclick="answerPhish('Real', '${msg.answer}', '${msg.explain}')">✓ Real</button>
+                        <button class="phish-btn fake" onclick="answerPhish('Fake', '${msg.answer}', '${msg.explain}')">✗ Fake</button>
+                    </div>
+                </div>
+            `;
+            phishAnswered = false;
+        }
+
+        function answerPhish(answer, correct, explain) {
+            if (phishAnswered) return;
+            phishAnswered = true;
+
+            const container = document.getElementById('phishingContainer');
+            const isCorrect = answer === correct;
+            if (isCorrect) phishScore++;
+
+            const feedbackClass = isCorrect ? 'correct' : 'incorrect';
+            const feedbackTitle = isCorrect ? '✓ Correct!' : '✗ Wrong!';
+            const feedback = `
+                <div class="feedback-box ${feedbackClass}">
+                    <div class="feedback-title">${feedbackTitle}</div>
+                    <div class="feedback-text"><strong>Explanation:</strong> ${explain}</div>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="nextPhishing()">Next Message →</button>
+            `;
+
+            container.innerHTML += feedback;
+
+            if (isCorrect) {
+                playSound('correct');
+            } else {
+                playSound('incorrect');
+            }
+        }
+
+        function nextPhishing() {
+            currentPhish++;
+            if (currentPhish < phishingMessages.length) {
+                document.getElementById('phishingContainer').innerHTML = '';
+                showPhishingMessage();
+            } else {
+                endPhishing();
+            }
+        }
+
+        function endPhishing() {
+            document.getElementById('phishingContainer').innerHTML = '';
+            document.getElementById('phishingSummary').style.display = 'block';
+
+            const accuracy = Math.round((phishScore / phishingMessages.length) * 100);
+            document.getElementById('phishScore').textContent = `${phishScore}/${phishingMessages.length}`;
+            document.getElementById('phishAccuracy').textContent = accuracy + '%';
+
+            gameState.totalScore += phishScore * 10;
+            updateScore();
+            saveToLeaderboard();
+            playSound('complete');
+            createConfetti();
+        }
+
+        // ========== PASSWORD STRENGTH ==========
+        function checkPasswordStrength() {
+            const password = document.getElementById('passwordInput').value;
+            let strength = 0;
+            let met = [false, false, false, false];
+
+            // Check length
+            if (password.length >= 8) {
+                strength += 25;
+                met[0] = true;
+            }
+
+            // Check uppercase
+            if (/[A-Z]/.test(password)) {
+                strength += 25;
+                met[1] = true;
+            }
+
+            // Check numbers
+            if (/[0-9]/.test(password)) {
+                strength += 25;
+                met[2] = true;
+            }
+
+            // Check special characters
+            if (/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+                strength += 25;
+                met[3] = true;
+            }
+
+            // Update UI
+            const bar = document.getElementById('strengthBar');
+            const text = document.getElementById('strengthText');
+            bar.className = 'strength-bar';
+
+            if (password === '') {
+                text.textContent = 'Enter a password';
+                bar.classList.remove('weak', 'fair', 'good', 'strong');
+            } else if (strength <= 25) {
+                text.textContent = 'Weak - Add more variety';
+                bar.classList.add('weak');
+            } else if (strength <= 50) {
+                text.textContent = 'Fair - Getting better';
+                bar.classList.add('fair');
+            } else if (strength <= 75) {
+                text.textContent = 'Good - Nice password';
+                bar.classList.add('good');
+            } else {
+                text.textContent = 'Strong - Excellent!';
+                bar.classList.add('strong');
+            }
+
+            // Update criteria
+            ['crit1', 'crit2', 'crit3', 'crit4'].forEach((id, i) => {
+                const el = document.getElementById(id);
+                if (met[i]) {
+                    el.classList.add('met');
+                } else {
+                    el.classList.remove('met');
+                }
+            });
+        }
+
+        // ========== SCENARIO GAME ==========
+        let currentScenario = 0;
+
+        function setupScenarios() {
+            showScenario();
+        }
+
+        function showScenario() {
+            const scenario = scenarios[currentScenario];
+            let choicesHTML = scenario.choices.map((choice, i) => 
+                `<button class="choice-btn" onclick="selectChoice(${i}, '${choice.outcome}', \`${choice.result}\`)">${choice.text}</button>`
+            ).join('');
+
+            document.getElementById('scenarioContainer').innerHTML = `
+                <div class="game-header">
+                    <h1 class="game-title-large">${scenario.title}</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <div class="scenario-content">
+                        <div class="scenario-text">${scenario.story}</div>
+                        ${choicesHTML}
+                    </div>
+                    <div id="scenarioOutcome"></div>
+                </div>
+            `;
+        }
+
+        function selectChoice(index, outcome, result) {
+            const buttons = document.querySelectorAll('.choice-btn');
+            buttons.forEach(btn => btn.style.pointerEvents = 'none');
+
+            const outcomeBox = document.getElementById('scenarioOutcome');
+            outcomeBox.innerHTML = `
+                <div class="outcome-box ${outcome}">
+                    <div class="outcome-title">${result.split(' ')[0]}</div>
+                    <div class="outcome-text">${result.substring(result.indexOf(' ') + 1)}</div>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="nextScenario()">
+                    ${currentScenario < scenarios.length - 1 ? 'Next Story →' : 'Finish →'}
+                </button>
+            `;
+
+            playSound(outcome === 'good' ? 'correct' : 'incorrect');
+            gameState.totalScore += 10;
+            updateScore();
+        }
+
+        function nextScenario() {
+            currentScenario++;
+            if (currentScenario < scenarios.length) {
+                showScenario();
+            } else {
+                saveToLeaderboard();
+                playSound('complete');
+                createConfetti();
+                goToDashboard();
+            }
+        }
+
+        // ========== MEMORY MATCH ==========
+        let memoryShuffled = [];
+        let selectedCards = [];
+        let matchedPairs = 0;
+        let memoryMoves = 0;
+
+        function setupMemory() {
+            resetMemory();
+        }
+
+        function resetMemory() {
+            matchedPairs = 0;
+            memoryMoves = 0;
+            selectedCards = [];
+            document.getElementById('memoryBoard').innerHTML = '';
+            document.getElementById('memorySummary').style.display = 'none';
+            document.getElementById('memoryMatches').textContent = '0';
+            document.getElementById('memoryMoves').textContent = '0';
+
+            memoryShuffled = [...memoryCards, ...memoryCards]
+                .sort(() => Math.random() - 0.5)
+                .map((item, i) => ({...item, id: i}));
+
+            const board = document.getElementById('memoryBoard');
+            memoryShuffled.forEach((item, i) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.dataset.index = i;
+                card.textContent = '?';
+                card.addEventListener('click', () => flipMemoryCard(i));
+                board.appendChild(card);
+            });
+        }
+
+        function flipMemoryCard(index) {
+            const card = document.querySelector(`[data-index="${index}"]`);
+            if (card.classList.contains('flipped') || card.classList.contains('matched') || selectedCards.length >= 2) return;
+
+            card.classList.add('flipped');
+            card.textContent = memoryShuffled[index].term;
+            selectedCards.push(index);
+
+            if (selectedCards.length === 2) {
+                memoryMoves++;
+                document.getElementById('memoryMoves').textContent = memoryMoves;
+                checkMemoryMatch();
+            }
+        }
+
+        function checkMemoryMatch() {
+            const [i1, i2] = selectedCards;
+            const card1 = memoryShuffled[i1];
+            const card2 = memoryShuffled[i2];
+
+            setTimeout(() => {
+                const el1 = document.querySelector(`[data-index="${i1}"]`);
+                const el2 = document.querySelector(`[data-index="${i2}"]`);
+
+                if ((card1.term === card2.term && card1.id !== card2.id) || 
+                    (card1.def === card2.def && card1.id !== card2.id)) {
+                    // Match found
+                    el1.classList.add('matched');
+                    el2.classList.add('matched');
+                    matchedPairs++;
+                    document.getElementById('memoryMatches').textContent = matchedPairs;
+                    playSound('correct');
+
+                    if (matchedPairs === memoryCards.length) {
+                        endMemory();
+                    }
+                } else {
+                    // No match
+                    el1.classList.remove('flipped');
+                    el2.classList.remove('flipped');
+                    el1.textContent = '?';
+                    el2.textContent = '?';
+                    playSound('incorrect');
+                }
+                selectedCards = [];
+            }, 1000);
+        }
+
+        function endMemory() {
+            document.getElementById('memoryBoard').style.pointerEvents = 'none';
+            const performance = memoryMoves <= 10 ? 'Excellent!' : memoryMoves <= 15 ? 'Great!' : 'Good!';
+            
+            document.getElementById('memorySummary').style.display = 'block';
+            document.getElementById('memoryFinalMoves').textContent = memoryMoves;
+            document.getElementById('memoryPerformance').textContent = performance;
+
+            gameState.totalScore += Math.max(100 - memoryMoves * 5, 10);
+            updateScore();
+            saveToLeaderboard();
+            playSound('complete');
+            createConfetti();
+        }
+
+        // ========== LEARN MORE ==========
+        function setupLearnMore() {
+            const grid = document.getElementById('termsGrid');
+            cyberTerms.forEach(term => {
+                const card = document.createElement('div');
+                card.className = 'term-card';
+                card.innerHTML = `
+                    <div class="term-title">${term.title}</div>
+                    <div class="term-text">${term.desc}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ========== LEADERBOARD ==========
+        function loadLeaderboard() {
+            const saved = localStorage.getItem('leaderboard');
+            const leaderboard = saved ? JSON.parse(saved) : [];
+            displayLeaderboard(leaderboard);
+        }
+
+        function saveToLeaderboard() {
+            let leaderboard = JSON.parse(localStorage.getItem('leaderboard') || '[]');
+            
+            const existing = leaderboard.findIndex(p => p.name === gameState.playerName);
+            const newEntry = {
+                name: gameState.playerName,
+                avatar: gameState.playerAvatar,
+                score: gameState.totalScore,
+                date: new Date().toLocaleDateString()
+            };
+
+            if (existing >= 0) {
+                if (gameState.totalScore > leaderboard[existing].score) {
+                    leaderboard[existing] = newEntry;
+                }
+            } else {
+                leaderboard.push(newEntry);
+            }
+
+            leaderboard.sort((a, b) => b.score - a.score);
+            leaderboard = leaderboard.slice(0, 10);
+            localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+            displayLeaderboard(leaderboard);
+        }
+
+        function displayLeaderboard(leaderboard) {
+            const body = document.getElementById('leaderboardBody');
+            body.innerHTML = leaderboard.map((player, i) => {
+                let medal = '';
+                if (i === 0) medal = '<span class="rank-badge gold">🥇</span>';
+                else if (i === 1) medal = '<span class="rank-badge silver">🥈</span>';
+                else if (i === 2) medal = '<span class="rank-badge bronze">🥉</span>';
+
+                return `
+                    <tr>
+                        <td>${medal || `<span style="color: var(--color-text-secondary);">#${i + 1}</span>`}</td>
+                        <td>${player.avatar} ${player.name}</td>
+                        <td>${player.score}</td>
+                        <td>${player.date}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // ========== UTILITIES ==========
+        function updateScore() {
+            document.getElementById('totalScore').textContent = gameState.totalScore;
+        }
+
+        function playSound(type) {
+            if (!gameState.soundEnabled) return;
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+
+            if (type === 'correct') {
+                oscillator.frequency.value = 800;
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+            } else if (type === 'incorrect') {
+                oscillator.frequency.value = 300;
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.2);
+            } else if (type === 'complete') {
+                const freqs = [600, 800, 1000];
+                freqs.forEach((freq, i) => {
+                    const osc = audioContext.createOscillator();
+                    const gain = audioContext.createGain();
+                    osc.frequency.value = freq;
+                    osc.connect(gain);
+                    gain.connect(audioContext.destination);
+                    gain.gain.setValueAtTime(0.1, audioContext.currentTime + i * 0.1);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.1 + 0.2);
+                    osc.start(audioContext.currentTime + i * 0.1);
+                    osc.stop(audioContext.currentTime + i * 0.1 + 0.2);
+                });
+            }
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.delay = Math.random() * 0.5 + 's';
+                confetti.style.background = Math.random() > 0.5 ? 'var(--color-primary)' : 'var(--color-accent)';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 3500);
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
