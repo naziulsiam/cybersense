@@ -287,8 +287,15 @@ body {
 .modules-section h2 {
   text-align: center;
   font-size: 2.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
   color: var(--text-light);
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
 }
 
 .modules-grid {
@@ -660,7 +667,6 @@ body {
 
   .features h2,
   .modules-section h2,
-  .quiz-section h2,
   .about h2 {
     font-size: 1.8rem;
   }
