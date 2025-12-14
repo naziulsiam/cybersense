@@ -610,9 +610,9 @@ function selectModule(moduleId) {
     correctAnswers = 0;
     answered = false;
     
-    // Show quiz section, hide modules
-    document.getElementById('modules-section').classList.add('hidden');
-    document.getElementById('quiz-section').classList.remove('hidden');
+    // Hide modules section, show quiz section
+    document.getElementById('modules').style.display = 'none';
+    document.getElementById('quiz-section').style.display = 'block';
     
     // Update header
     document.getElementById('module-title').textContent = currentModule.name;
@@ -625,9 +625,10 @@ function selectModule(moduleId) {
 
 // Back to Modules
 function backToModules() {
-    document.getElementById('quiz-section').classList.add('hidden');
-    document.getElementById('modules-section').classList.remove('hidden');
-    document.getElementById('modules-section').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('quiz-section').style.display = 'none';
+    document.getElementById('modules').style.display = 'block';
+    document.getElementById('modules').scrollIntoView({ behavior: 'smooth' });
+    currentModule = null;
 }
 
 // Load Question
