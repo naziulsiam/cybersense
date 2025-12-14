@@ -8,7 +8,7 @@
     <title>CyberSense - Cybersecurity Training for Kids</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
-<body>
+<body data-theme="light">
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -27,14 +27,17 @@
                     </svg>
                     <h1>CyberSense</h1>
                 </div>
-                <div class="header-stats">
-                    <div class="header-stat">
-                        <span class="stat-label">Level</span>
-                        <span class="stat-value" id="header-level">1</span>
-                    </div>
-                    <div class="header-stat">
-                        <span class="stat-label">XP</span>
-                        <span class="stat-value" id="header-xp">0/100</span>
+                <div class="header-controls">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">🌙</button>
+                    <div class="header-stats">
+                        <div class="header-stat">
+                            <span class="stat-label">Level</span>
+                            <span class="stat-value" id="header-level">1</span>
+                        </div>
+                        <div class="header-stat">
+                            <span class="stat-label">XP</span>
+                            <span class="stat-value" id="header-xp">0/100</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -98,7 +101,7 @@
             <!-- Dashboard Section -->
             <div id="dashboard-section" class="dashboard-section">
                 <div class="dashboard-header">
-                    <h2>🏆 Your Dashboard</h2>
+                    <h2>🎮 Your Dashboard</h2>
                 </div>
                 
                 <div class="dashboard-grid">
@@ -106,9 +109,12 @@
                     <div class="card profile-card">
                         <div class="card-title">👤 Profile</div>
                         <div class="profile-content">
-                            <div class="profile-avatar">🛡️</div>
+                            <div class="profile-avatar-container">
+                                <div class="profile-avatar" id="profile-avatar">🛡️</div>
+                                <button class="avatar-edit-btn" onclick="openAvatarCustomizer()">✏️</button>
+                            </div>
                             <div class="profile-info">
-                                <h3>Cyber Guardian</h3>
+                                <h3 id="player-name">Cyber Guardian</h3>
                                 <p id="profile-level">Level 1</p>
                                 <div class="xp-bar">
                                     <div id="xp-bar-fill" class="xp-bar-fill"></div>
@@ -133,40 +139,55 @@
                                 <span class="stat-value" id="accuracy">0%</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-icon">🏅</span>
+                                <span class="stat-icon">🔥</span>
                                 <span class="stat-label">Streak</span>
                                 <span class="stat-value" id="best-streak">0</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Leaderboard -->
+                    <!-- Badges Card -->
+                    <div class="card badges-card">
+                        <div class="card-title">🏆 Badges</div>
+                        <div class="badges-container" id="badges-container"></div>
+                    </div>
+
+                    <!-- Personal Leaderboard -->
                     <div class="card leaderboard-card">
-                        <div class="card-title">🏆 Leaderboard</div>
+                        <div class="card-title">📱 Personal</div>
                         <div class="leaderboard">
                             <div class="leaderboard-item rank-1">
                                 <span class="rank">🥇</span>
                                 <span class="name">You</span>
-                                <span class="points" id="leaderboard-points">0 XP</span>
-                            </div>
-                            <div class="leaderboard-item rank-2">
-                                <span class="rank">🥈</span>
-                                <span class="name">Alex</span>
-                                <span class="points">2,450 XP</span>
-                            </div>
-                            <div class="leaderboard-item rank-3">
-                                <span class="rank">🥉</span>
-                                <span class="name">Jordan</span>
-                                <span class="points">2,200 XP</span>
+                                <span class="points" id="personal-points">0 XP</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Module Progress -->
-                    <div class="card modules-progress-card">
-                        <div class="card-title">🎮 Module Progress</div>
-                        <div class="module-progress-list" id="module-progress-list"></div>
+                    <!-- Team Leaderboard -->
+                    <div class="card team-leaderboard-card">
+                        <div class="card-title">👥 Team Leaderboard</div>
+                        <div class="team-selector">
+                            <input type="text" id="team-code" placeholder="Enter team code" maxlength="6">
+                            <button class="btn btn-sm" onclick="joinTeam()">Join</button>
+                        </div>
+                        <div id="team-info" class="team-info hidden">
+                            <p><strong>Team:</strong> <span id="team-name">-</span></p>
+                            <div class="team-leaderboard" id="team-leaderboard"></div>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Avatar Customizer Modal -->
+            <div id="avatar-modal" class="modal hidden">
+                <div class="modal-content">
+                    <button class="modal-close" onclick="closeAvatarCustomizer()">✕</button>
+                    <h2>👤 Customize Avatar</h2>
+                    <div class="avatar-preview" id="avatar-preview">🛡️</div>
+                    <p style="text-align: center; color: var(--text-muted);">Click to select</p>
+                    <div class="avatar-grid" id="avatar-grid"></div>
+                    <button class="btn btn-primary" onclick="confirmAvatar()">Save Avatar</button>
                 </div>
             </div>
 
