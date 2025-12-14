@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CyberSense - AI-powered cybersecurity awareness training platform. Learn to recognize and prevent social engineering attacks.">
+    <meta name="description" content="CyberSense - AI-powered cybersecurity awareness training platform. Learn to recognize and prevent cyber threats with 5 interactive modules.">
     <meta name="theme-color" content="#0f172a">
     <title>CyberSense - Cybersecurity Awareness Training</title>
     <link rel="stylesheet" href="styles/main.css">
@@ -29,7 +29,7 @@
                 </div>
                 <nav class="nav">
                     <a href="#features">Features</a>
-                    <a href="#learn">Learn</a>
+                    <a href="#modules">Modules</a>
                     <a href="#about">About</a>
                 </nav>
             </div>
@@ -42,8 +42,8 @@
         <div class="container">
             <div class="hero-content">
                 <h2>Master Cybersecurity Awareness</h2>
-                <p>Learn to recognize phishing, social engineering, and cyber threats with interactive training modules and real-world scenarios.</p>
-                <button class="btn btn-primary" onclick="document.getElementById('quiz-section').scrollIntoView({behavior: 'smooth'})">
+                <p>Learn to recognize phishing, social engineering, and cyber threats with 5 interactive training modules and real-world scenarios.</p>
+                <button class="btn btn-primary" onclick="document.getElementById('modules').scrollIntoView({behavior: 'smooth'})">
                     Start Learning
                 </button>
             </div>
@@ -57,18 +57,18 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🎯</div>
-                    <h3>Interactive Training</h3>
-                    <p>Engage with real-world scenarios and test your cybersecurity knowledge</p>
+                    <h3>5 Interactive Modules</h3>
+                    <p>Comprehensive training covering phishing, social engineering, passwords, malware, and web security</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔐</div>
-                    <h3>Threat Detection</h3>
-                    <p>Learn to identify phishing emails, suspicious links, and social engineering</p>
+                    <div class="feature-icon">🔍</div>
+                    <h3>Real-World Scenarios</h3>
+                    <p>Learn from authentic cybersecurity challenges based on actual threat patterns</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
                     <h3>Progress Tracking</h3>
-                    <p>Monitor your learning progress and identify areas for improvement</p>
+                    <p>Monitor your learning progress and identify areas for improvement across all modules</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🚀</div>
@@ -79,14 +79,59 @@
         </div>
     </section>
 
-    <!-- Quiz Section -->
-    <section class="quiz-section" id="quiz-section">
+    <!-- Module Selector -->
+    <section class="modules-section" id="modules">
         <div class="container">
-            <h2>Test Your Knowledge</h2>
+            <h2>Training Modules</h2>
+            <div class="modules-grid">
+                <button class="module-card" onclick="selectModule(0)">
+                    <div class="module-icon">🎣</div>
+                    <h3>Phishing Detection</h3>
+                    <p>Learn to identify fraudulent emails and phishing attempts</p>
+                    <span class="difficulty">Beginner</span>
+                </button>
+                <button class="module-card" onclick="selectModule(1)">
+                    <div class="module-icon">🎭</div>
+                    <h3>Social Engineering</h3>
+                    <p>Recognize manipulation tactics and social engineering attacks</p>
+                    <span class="difficulty">Intermediate</span>
+                </button>
+                <button class="module-card" onclick="selectModule(2)">
+                    <div class="module-icon">🔐</div>
+                    <h3>Password Security</h3>
+                    <p>Create and manage strong passwords for account protection</p>
+                    <span class="difficulty">Beginner</span>
+                </button>
+                <button class="module-card" onclick="selectModule(3)">
+                    <div class="module-icon">🦠</div>
+                    <h3>Malware & USB</h3>
+                    <p>Avoid infected files and malicious USB devices</p>
+                    <span class="difficulty">Intermediate</span>
+                </button>
+                <button class="module-card" onclick="selectModule(4)">
+                    <div class="module-icon">🌐</div>
+                    <h3>Web Security</h3>
+                    <p>Identify legitimate websites and secure online transactions</p>
+                    <span class="difficulty">Beginner</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="quiz-section hidden" id="quiz-section">
+        <div class="container">
+            <div class="quiz-header">
+                <button class="btn btn-outline back-btn" onclick="backToModules()">← Back to Modules</button>
+                <h2 id="module-title">Module Title</h2>
+                <div class="module-stats">
+                    <span id="question-counter">0 / 10</span>
+                </div>
+            </div>
+            
             <div class="quiz-container">
                 <div class="quiz-card">
-                    <h3>Scenario Analysis</h3>
-                    <p id="scenario"></p>
+                    <p id="scenario" class="scenario-text"></p>
                     
                     <div class="options">
                         <button class="option-btn" onclick="checkAnswer(0)">
@@ -119,13 +164,15 @@
                             <span class="value" id="streak">0</span>
                         </div>
                         <div class="stat">
-                            <span class="label">Level</span>
-                            <span class="value" id="level">1</span>
+                            <span class="label">Correct</span>
+                            <span class="value" id="correct">0/10</span>
                         </div>
                     </div>
 
-                    <button class="btn btn-secondary" onclick="nextQuestion()">Next Question</button>
-                    <button class="btn btn-outline" onclick="resetQuiz()">Reset</button>
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="nextQuestion()" id="next-btn">Next Question →</button>
+                        <button class="btn btn-outline" onclick="resetQuiz()">Reset Module</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,15 +183,15 @@
         <div class="container">
             <h2>About CyberSense</h2>
             <div class="about-content">
-                <p>CyberSense is an interactive cybersecurity awareness platform designed to help individuals and organizations understand and combat cyber threats. Our mission is to make cybersecurity training engaging, practical, and accessible to everyone.</p>
+                <p>CyberSense is an interactive cybersecurity awareness platform designed to help individuals and organizations understand and combat cyber threats. With 5 comprehensive modules and 50+ scenarios, our mission is to make cybersecurity training engaging, practical, and accessible to everyone.</p>
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-number">100+</div>
-                        <p>Training Scenarios</p>
+                        <div class="stat-number">5</div>
+                        <p>Training Modules</p>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">5</div>
-                        <p>Difficulty Levels</p>
+                        <div class="stat-number">50+</div>
+                        <p>Real Scenarios</p>
                     </div>
                     <div class="stat-card">
                         <div class="stat-number">∞</div>
