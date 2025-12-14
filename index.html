@@ -83,7 +83,8 @@
     <section class="modules-section" id="modules">
         <div class="container">
             <h2>Training Modules</h2>
-            <div class="modules-grid">
+            <p class="section-subtitle">Choose a module to begin training</p>
+            <div class="modules-grid" id="modules-grid">
                 <button class="module-card" onclick="selectModule(0)">
                     <div class="module-icon">🎣</div>
                     <h3>Phishing Detection</h3>
@@ -119,7 +120,7 @@
     </section>
 
     <!-- Quiz Section -->
-    <section class="quiz-section hidden" id="quiz-section">
+    <section class="quiz-section" id="quiz-section" style="display: none;">
         <div class="container">
             <div class="quiz-header">
                 <button class="btn btn-outline back-btn" onclick="backToModules()">← Back to Modules</button>
