@@ -38,6 +38,11 @@ body {
   padding: 0 20px;
 }
 
+/* Utility Classes */
+.hidden {
+  display: none !important;
+}
+
 /* Header */
 .header {
   background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 14, 39, 0.95) 100%);
@@ -273,17 +278,133 @@ body {
   line-height: 1.8;
 }
 
-/* Quiz Section */
-.quiz-section {
+/* Modules Section */
+.modules-section {
   padding: 80px 20px;
   background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
 }
 
-.quiz-section h2 {
+.modules-section h2 {
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 3rem;
   color: var(--text-light);
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.module-card {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.2) 0%, rgba(139, 92, 246, 0.2) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.module-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  box-shadow: 0 20px 40px rgba(6, 182, 212, 0.2);
+}
+
+.module-card:hover::before {
+  opacity: 1;
+}
+
+.module-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.module-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: var(--primary);
+  position: relative;
+  z-index: 1;
+}
+
+.module-card p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.difficulty {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+  color: white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  margin-top: 0.5rem;
+}
+
+/* Quiz Section */
+.quiz-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-darker) 100%);
+  min-height: 100vh;
+}
+
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.quiz-header h2 {
+  font-size: 2rem;
+  color: var(--text-light);
+  flex: 1;
+  min-width: 200px;
+}
+
+.back-btn {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+}
+
+.module-stats {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+#question-counter {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .quiz-container {
@@ -299,13 +420,7 @@ body {
   backdrop-filter: blur(10px);
 }
 
-.quiz-card h3 {
-  color: var(--primary);
-  margin-bottom: 1.5rem;
-  font-size: 1.3rem;
-}
-
-#scenario {
+.scenario-text {
   color: var(--text-light);
   font-size: 1.05rem;
   line-height: 1.8;
@@ -421,8 +536,16 @@ body {
   color: var(--primary);
 }
 
-.hidden {
-  display: none !important;
+.button-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.button-group .btn {
+  flex: 1;
+  min-width: 150px;
 }
 
 /* About Section */
@@ -536,12 +659,14 @@ body {
   }
 
   .features h2,
+  .modules-section h2,
   .quiz-section h2,
   .about h2 {
     font-size: 1.8rem;
   }
 
-  .features-grid {
+  .features-grid,
+  .modules-grid {
     grid-template-columns: 1fr;
   }
 
@@ -561,6 +686,15 @@ body {
   .cyber-grid {
     background-size: 30px 30px;
   }
+
+  .quiz-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .button-group .btn {
+    min-width: 100%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -577,6 +711,7 @@ body {
   }
 
   .features-grid,
+  .modules-grid,
   .stats-grid {
     grid-template-columns: 1fr;
   }
@@ -592,5 +727,17 @@ body {
 
   .option-label {
     align-self: flex-start;
+  }
+
+  .quiz-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .button-group .btn {
+    width: 100%;
   }
 }
