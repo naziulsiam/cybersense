@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CyberSense - Interactive cybersecurity awareness training with 5 modules and password strength tester.">
+    <meta name="description" content="CyberSense - Kids Cybersecurity Awareness Training. Learn to protect yourself online with interactive games and challenges.">
     <meta name="theme-color" content="#0f172a">
-    <title>CyberSense - Cybersecurity Awareness Training</title>
+    <title>CyberSense - Cybersecurity Training for Kids</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
@@ -20,45 +20,40 @@
                         <path d="M16 12c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4z" fill="#0f172a"/>
                         <defs>
                             <linearGradient id="grad1" x1="0" y1="0" x2="32" y2="32">
-                                <stop offset="0%" style="stop-color:#06b6d4;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#0d9488;stop-opacity:1" />
+                                <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
                             </linearGradient>
                         </defs>
                     </svg>
                     <h1>CyberSense</h1>
                 </div>
-                <nav class="nav">
-                    <a href="#about">About</a>
-                    <a href="https://github.com/naziulsiam/cybersense" target="_blank">GitHub</a>
-                </nav>
+                <div class="header-stats">
+                    <div class="header-stat">
+                        <span class="stat-label">Level</span>
+                        <span class="stat-value" id="header-level">1</span>
+                    </div>
+                    <div class="header-stat">
+                        <span class="stat-label">XP</span>
+                        <span class="stat-value" id="header-xp">0/100</span>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="cyber-grid"></div>
-        <div class="container">
-            <div class="hero-content">
-                <h2>Master Cybersecurity Awareness</h2>
-                <p>5 Interactive Modules • 50+ Real-World Scenarios • Expert-Curated Content</p>
-            </div>
-        </div>
-    </section>
 
     <!-- Main Content -->
     <div class="main-wrapper">
         <!-- Modules Sidebar -->
         <aside class="modules-sidebar">
             <div class="sidebar-header">
-                <h3>Training Modules</h3>
-                <p>Select a module to begin</p>
+                <h3>🎮 Modules</h3>
+                <p>Choose a challenge</p>
             </div>
             <div class="modules-list" id="modules-list">
                 <button class="module-item" onclick="selectModule(0)" data-module="0">
                     <span class="module-number">1</span>
                     <div class="module-info">
-                        <h4>🎣 Phishing Detection</h4>
+                        <h4>🎣 Phishing</h4>
                         <span class="module-difficulty">Beginner</span>
                     </div>
                     <span class="module-progress">10</span>
@@ -66,7 +61,7 @@
                 <button class="module-item" onclick="selectModule(1)" data-module="1">
                     <span class="module-number">2</span>
                     <div class="module-info">
-                        <h4>🎭 Social Engineering</h4>
+                        <h4>🎭 Tricks</h4>
                         <span class="module-difficulty">Intermediate</span>
                     </div>
                     <span class="module-progress">10</span>
@@ -74,7 +69,7 @@
                 <button class="module-item" onclick="selectModule(2)" data-module="2">
                     <span class="module-number">3</span>
                     <div class="module-info">
-                        <h4>🔐 Password Security</h4>
+                        <h4>🔐 Passwords</h4>
                         <span class="module-difficulty">Beginner</span>
                     </div>
                     <span class="module-progress">10</span>
@@ -82,7 +77,7 @@
                 <button class="module-item" onclick="selectModule(3)" data-module="3">
                     <span class="module-number">4</span>
                     <div class="module-info">
-                        <h4>🦠 Malware & USB</h4>
+                        <h4>🦠 Malware</h4>
                         <span class="module-difficulty">Intermediate</span>
                     </div>
                     <span class="module-progress">10</span>
@@ -90,7 +85,7 @@
                 <button class="module-item" onclick="selectModule(4)" data-module="4">
                     <span class="module-number">5</span>
                     <div class="module-info">
-                        <h4>🌐 Web Security</h4>
+                        <h4>🌐 Websites</h4>
                         <span class="module-difficulty">Beginner</span>
                     </div>
                     <span class="module-progress">10</span>
@@ -98,40 +93,98 @@
             </div>
         </aside>
 
-        <!-- Quiz Content Area -->
-        <main class="quiz-main">
-            <div id="welcome-section" class="welcome-section">
-                <div class="welcome-content">
-                    <h2>Welcome to CyberSense</h2>
-                    <p>Select a module from the left to begin your cybersecurity training journey.</p>
-                    <div class="welcome-stats">
-                        <div class="stat-box">
-                            <div class="stat-number">5</div>
-                            <div class="stat-label">Modules</div>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Dashboard Section -->
+            <div id="dashboard-section" class="dashboard-section">
+                <div class="dashboard-header">
+                    <h2>🏆 Your Dashboard</h2>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <!-- Player Profile Card -->
+                    <div class="card profile-card">
+                        <div class="card-title">👤 Profile</div>
+                        <div class="profile-content">
+                            <div class="profile-avatar">🛡️</div>
+                            <div class="profile-info">
+                                <h3>Cyber Guardian</h3>
+                                <p id="profile-level">Level 1</p>
+                                <div class="xp-bar">
+                                    <div id="xp-bar-fill" class="xp-bar-fill"></div>
+                                </div>
+                                <p class="xp-text" id="xp-text">0 / 100 XP</p>
+                            </div>
                         </div>
-                        <div class="stat-box">
-                            <div class="stat-number">50+</div>
-                            <div class="stat-label">Questions</div>
+                    </div>
+
+                    <!-- Stats Card -->
+                    <div class="card stats-card">
+                        <div class="card-title">📊 Stats</div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <span class="stat-icon">✅</span>
+                                <span class="stat-label">Correct</span>
+                                <span class="stat-value" id="total-correct">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">🎯</span>
+                                <span class="stat-label">Accuracy</span>
+                                <span class="stat-value" id="accuracy">0%</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-icon">🏅</span>
+                                <span class="stat-label">Streak</span>
+                                <span class="stat-value" id="best-streak">0</span>
+                            </div>
                         </div>
-                        <div class="stat-box">
-                            <div class="stat-number">∞</div>
-                            <div class="stat-label">Learning</div>
+                    </div>
+
+                    <!-- Leaderboard -->
+                    <div class="card leaderboard-card">
+                        <div class="card-title">🏆 Leaderboard</div>
+                        <div class="leaderboard">
+                            <div class="leaderboard-item rank-1">
+                                <span class="rank">🥇</span>
+                                <span class="name">You</span>
+                                <span class="points" id="leaderboard-points">0 XP</span>
+                            </div>
+                            <div class="leaderboard-item rank-2">
+                                <span class="rank">🥈</span>
+                                <span class="name">Alex</span>
+                                <span class="points">2,450 XP</span>
+                            </div>
+                            <div class="leaderboard-item rank-3">
+                                <span class="rank">🥉</span>
+                                <span class="name">Jordan</span>
+                                <span class="points">2,200 XP</span>
+                            </div>
                         </div>
+                    </div>
+
+                    <!-- Module Progress -->
+                    <div class="card modules-progress-card">
+                        <div class="card-title">🎮 Module Progress</div>
+                        <div class="module-progress-list" id="module-progress-list"></div>
                     </div>
                 </div>
             </div>
 
+            <!-- Quiz Section -->
             <div id="quiz-section" class="quiz-section hidden">
                 <div class="quiz-header">
+                    <button class="btn btn-back" onclick="backToDashboard()">← Back</button>
                     <div class="quiz-title">
                         <h2 id="module-title">Module Title</h2>
-                        <span id="question-counter" class="question-counter">1 / 10</span>
+                        <div class="level-badge" id="level-badge">Level 1</div>
                     </div>
                     <div class="quiz-progress">
-                        <div class="progress-bar">
-                            <div id="progress-fill" class="progress-fill"></div>
-                        </div>
+                        <span id="question-counter">1 / 10</span>
                     </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
                 </div>
 
                 <div class="quiz-container">
@@ -141,9 +194,9 @@
 
                     <!-- Password Tester (Only for Password Security Module) -->
                     <div id="password-tester" class="password-tester hidden">
-                        <h3>Test Password Strength</h3>
+                        <h3>🔐 Test Password Strength</h3>
                         <div class="password-input-group">
-                            <input type="password" id="password-input" placeholder="Enter a password to test" class="password-input">
+                            <input type="password" id="password-input" placeholder="Try a password" class="password-input">
                             <button class="toggle-password-visibility" onclick="togglePasswordVisibility()">👁️</button>
                         </div>
                         <div class="password-strength">
@@ -163,42 +216,27 @@
                         <div id="feedback-card" class="feedback-card"></div>
                     </div>
 
-                    <!-- Quiz Stats -->
-                    <div class="quiz-stats">
-                        <div class="stat">
-                            <span class="label">Score</span>
-                            <span class="value" id="score">0</span>
-                        </div>
-                        <div class="stat">
-                            <span class="label">Correct</span>
-                            <span class="value" id="correct-count">0/10</span>
-                        </div>
-                        <div class="stat">
-                            <span class="label">Streak</span>
-                            <span class="value" id="streak">0</span>
-                        </div>
+                    <!-- XP Gain Message -->
+                    <div id="xp-message" class="xp-message hidden">
+                        <span id="xp-gain">+10 XP</span>
                     </div>
 
                     <!-- Action Buttons -->
                     <div class="button-group">
-                        <button class="btn btn-secondary" id="next-btn" onclick="nextQuestion()">Next Question →</button>
-                        <button class="btn btn-outline" onclick="resetModule()">Reset Module</button>
+                        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Next →</button>
+                        <button class="btn btn-secondary" onclick="resetModule()">Reset</button>
                     </div>
                 </div>
             </div>
         </main>
     </div>
 
-    <!-- About Section -->
-    <section class="about" id="about">
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <h2>About CyberSense</h2>
-            <p>CyberSense is an interactive cybersecurity awareness platform designed to help you recognize and prevent cyber threats. With 5 comprehensive modules covering phishing, social engineering, password security, malware, and web security, you'll learn from real-world scenarios and expert explanations.</p>
-            <p style="text-align: center; margin-top: 2rem; color: var(--text-muted);">
-                Built with 🔐 by <a href="https://github.com/naziulsiam" target="_blank" style="color: var(--primary);">Ali Siam</a>
-            </p>
+            <p>CyberSense © 2025 • Learn to be safe online! 🛡️</p>
         </div>
-    </section>
+    </footer>
 
     <script src="js/script.js"></script>
 </body>
