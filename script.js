@@ -145,9 +145,7 @@ const memoryCards = [
     { emoji: "🔐", name: "Password" },
     { emoji: "🛡️", name: "Firewall" },
     { emoji: "🔒", name: "Encryption" },
-    { emoji: "🌐", name: "VPN" },
-    { emoji: "🔑", name: "Access Key" },
-    { emoji: "⚠️", name: "Warning" }
+    { emoji: "🌐", name: "VPN" }
 ];
 
 const cyberTerms = [
