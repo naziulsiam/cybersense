@@ -543,6 +543,7 @@ let memoryShuffled = [];
 let selectedCards = [];
 let matchedPairs = 0;
 let memoryMoves = 0;
+let memoryTimerStarted = false;
 
 function setupMemory() {
     resetMemory();
@@ -552,6 +553,7 @@ function resetMemory() {
     matchedPairs = 0;
     memoryMoves = 0;
     selectedCards = [];
+    memoryTimerStarted = false;
     clearInterval(memoryTimerInterval);
     document.getElementById('memoryBoard').innerHTML = '';
     document.getElementById('memorySummary').style.display = 'none';
@@ -574,13 +576,18 @@ function resetMemory() {
         board.appendChild(card);
     });
 
-    // Start timer
-    startMemoryTimer();
+    // Timer will start on first card flip
 }
 
 function flipMemoryCard(index) {
     const card = document.querySelector(`[data-index="${index}"]`);
     if (!card || card.classList.contains('flipped') || card.classList.contains('matched') || selectedCards.length >= 2) return;
+
+    // Start timer on first card flip
+    if (!memoryTimerStarted) {
+        memoryTimerStarted = true;
+        startMemoryTimer();
+    }
 
     card.classList.add('flipped');
     card.textContent = memoryShuffled[index].emoji;
@@ -884,3 +891,4 @@ function loadGameState() {
 }
 
 window.addEventListener('load', init);
+
