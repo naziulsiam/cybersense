@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSense GameHub - Learn Cybersecurity Through Games</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <div class="logo-icon">🛡️</div>
+            <span>CyberSense GameHub</span>
+        </div>
+        <div class="header-info">
+            <div class="player-badge">
+                <span id="playerName">Player</span> | 💰 <span id="headerCoins">0</span> | 🏆 <span
+                    id="totalScore">0</span>
+            </div>
+            <button class="sound-toggle" id="soundToggle">🔊 Sound ON</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">🏠</span>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item" data-section="quiz">
+                <span class="nav-icon">❓</span>
+                <span>Quiz Arena</span>
+            </div>
+            <div class="nav-item" data-section="phishing">
+                <span class="nav-icon">🎣</span>
+                <span>Spot the Phish</span>
+            </div>
+            <div class="nav-item" data-section="password">
+                <span class="nav-icon">🔐</span>
+                <span>Password Lab</span>
+            </div>
+            <div class="nav-item" data-section="scenario">
+                <span class="nav-icon">🎬</span>
+                <span>Cyber Stories</span>
+            </div>
+            <div class="nav-item" data-section="memory">
+                <span class="nav-icon">🧠</span>
+                <span>Memory Match</span>
+            </div>
+            <div class="nav-item" data-section="leaderboard">
+                <span class="nav-icon">🏆</span>
+                <span>Leaderboard</span>
+            </div>
+            <div class="nav-item" data-section="learn">
+                <span class="nav-icon">📚</span>
+                <span>Learn More</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <!-- Dashboard Section -->
+            <section class="content-section active" id="dashboard">
+                <h1 class="game-title-large" style="margin-bottom: 12px;">Welcome to CyberSense GameHub</h1>
+                <p style="color: var(--color-text-secondary); margin-bottom: 32px;">
+                    Learn cybersecurity through interactive games designed for age 11+. Choose a game below to start!
+                </p>
+
+                <!-- Player Profile -->
+                <div
+                    style="margin-bottom: 32px; background: rgba(12, 17, 32, 0.96); border: 1px solid rgba(70, 194, 184, 0.24); border-radius: 12px; padding: 20px;">
+                    <h3 style="color: var(--color-primary); margin-bottom: 16px;">👤 Player Profile</h3>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                        <div>
+                            <label
+                                style="display: block; font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px;">Player
+                                Name</label>
+                            <input type="text" id="playerNameInput" class="password-input" placeholder="Enter your name"
+                                maxlength="20" style="width: 100%;">
+                        </div>
+                        <div>
+                            <label
+                                style="display: block; font-size: 12px; color: var(--color-text-secondary); margin-bottom: 6px;">Level
+                                & XP</label>
+                            <div
+                                style="background: #101528; padding: 13px; border-radius: 9px; border: 1px solid rgba(70, 194, 184, 0.26);">
+                                <span style="color: var(--color-primary); font-weight: 700;">Level <span
+                                        id="playerLevel">1</span></span>
+                                <span style="color: var(--color-text-secondary); margin-left: 8px;">(<span
+                                        id="playerXP">0</span> XP)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                        <div
+                            style="background: linear-gradient(135deg, rgba(70, 194, 184, 0.1), rgba(255, 179, 193, 0.1)); padding: 12px; border-radius: 9px; border: 1px solid rgba(70, 194, 184, 0.3);">
+                            <div style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px;">💰
+                                COINS</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--color-primary);"
+                                id="playerCoins">0</div>
+                        </div>
+                        <div
+                            style="background: linear-gradient(135deg, rgba(255, 179, 193, 0.1), rgba(70, 194, 184, 0.1)); padding: 12px; border-radius: 9px; border: 1px solid rgba(255, 179, 193, 0.3);">
+                            <div style="font-size: 11px; color: var(--color-text-secondary); margin-bottom: 4px;">🏆
+                                SCORE</div>
+                            <div style="font-size: 24px; font-weight: 800; color: var(--color-accent);"
+                                id="playerScore">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Avatar Selector -->
+                <div style="margin-bottom: 32px;">
+                    <h3 style="color: var(--color-primary); margin-bottom: 12px;">Choose Your Avatar</h3>
+                    <div class="avatar-grid">
+                        <div class="avatar-option selected" data-avatar="🥸">🥸</div>
+                        <div class="avatar-option" data-avatar="🦸">🦸</div>
+                        <div class="avatar-option" data-avatar="🧠">🧠</div>
+                        <div class="avatar-option" data-avatar="🤖">🤖</div>
+                        <div class="avatar-option" data-avatar="👾">👾</div>
+                        <div class="avatar-option" data-avatar="🎮">🎮</div>
+                    </div>
+                </div>
+
+                <h2 style="color: var(--color-primary); margin-bottom: 20px;">Featured Games</h2>
+                <div class="dashboard-grid">
+                    <div class="game-card" data-game="quiz">
+                        <div class="game-icon">❓</div>
+                        <div class="game-title">Cyber Quiz Arena</div>
+                        <p class="game-desc">Test your cybersecurity knowledge with 20 questions and a final score
+                            summary.</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="phishing">
+                        <div class="game-icon">🎣</div>
+                        <div class="game-title">Spot The Phish</div>
+                        <p class="game-desc">Decide if each message is real or fake and learn the red flags.</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="password">
+                        <div class="game-icon">🔐</div>
+                        <div class="game-title">Password Strength Lab</div>
+                        <p class="game-desc">Try passwords and see live strength feedback with improvement tips.</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="scenario">
+                        <div class="game-icon">🎬</div>
+                        <div class="game-title">Cyber Scenario Simulator</div>
+                        <p class="game-desc">Choose your path in mini stories and see good or bad outcomes.</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="memory">
+                        <div class="game-icon">🧠</div>
+                        <div class="game-title">Memory Match</div>
+                        <p class="game-desc">Match cyber terms with their meanings in a quick memory challenge.</p>
+                        <button class="play-btn">Play Now</button>
+                    </div>
+
+                    <div class="game-card" data-game="leaderboard">
+                        <div class="game-icon">🏆</div>
+                        <div class="game-title">Leaderboard</div>
+                        <p class="game-desc">See top players and scores saved on this device.</p>
+                        <button class="play-btn">View Scores</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz Section -->
+            <section class="content-section" id="quiz">
+                <div class="game-header">
+                    <h1 class="game-title-large">Cyber Quiz Arena</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen" id="quizScreen">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                        <div class="progress-bar" style="flex: 1; margin-right: 16px;">
+                            <div class="progress-fill" id="quizProgress" style="width: 0%"></div>
+                        </div>
+                        <div id="quizTimer"
+                            style="font-size: 20px; font-weight: 700; color: var(--color-primary); min-width: 80px; text-align: right;">
+                            ⏱️ <span id="quizTimeDisplay">--:--</span>
+                        </div>
+                    </div>
+                    <div class="question-container" id="quizContainer"></div>
+                    <button class="btn btn-primary" id="nextQuizBtn" style="width: 100%;" onclick="nextQuestion()">Next
+                        Question</button>
+                </div>
+                <div id="quizSummary" style="display: none; animation: fadeIn 0.45s ease;">
+                    <h2 style="color: var(--color-primary); margin-bottom: 24px;">Quiz Complete!</h2>
+                    <div class="score-summary">
+                        <div class="score-box">
+                            <div class="score-label">Your Score</div>
+                            <div class="score-value" id="quizFinalScore">0/20</div>
+                        </div>
+                        <div class="score-box">
+                            <div class="score-label">Accuracy</div>
+                            <div class="score-value" id="quizAccuracy">0%</div>
+                        </div>
+                        <div class="score-box">
+                            <div class="score-label">Time</div>
+                            <div class="score-value" id="quizTime" style="font-size: 22px;">0:00</div>
+                        </div>
+                        <div class="score-box">
+                            <div class="score-label">Speed Bonus</div>
+                            <div class="score-value" id="quizSpeedBonus"
+                                style="font-size: 22px; color: var(--color-accent);">+0 🪙</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" onclick="resetQuiz()" style="width: 100%; margin-top: 24px;">Play
+                        Again</button>
+                    <button class="btn btn-secondary" onclick="goToDashboard()"
+                        style="width: 100%; margin-top: 12px;">Back to Dashboard</button>
+                </div>
+            </section>
+
+            <!-- Phishing Section -->
+            <section class="content-section" id="phishing">
+                <div class="game-header">
+                    <h1 class="game-title-large">Spot The Phish</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <div style="margin-bottom: 18px;">
+                        <span style="color: var(--color-text-secondary);">Message <span id="phishCount">1</span> /
+                            10</span>
+                        <div class="progress-bar" style="margin-top: 8px;">
+                            <div class="progress-fill" id="phishProgress" style="width: 10%"></div>
+                        </div>
+                    </div>
+                    <div id="phishingContainer"></div>
+                    <div id="phishingSummary" style="display: none; animation: fadeIn 0.45s ease;">
+                        <h2 style="color: var(--color-primary); margin-bottom: 24px;">Challenge Complete!</h2>
+                        <div class="score-summary">
+                            <div class="score-box">
+                                <div class="score-label">Correct</div>
+                                <div class="score-value" id="phishScore">0/10</div>
+                            </div>
+                            <div class="score-box">
+                                <div class="score-label">Accuracy</div>
+                                <div class="score-value" id="phishAccuracy">0%</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="resetPhishing()"
+                            style="width: 100%; margin-top: 24px;">Try Again</button>
+                        <button class="btn btn-secondary" onclick="goToDashboard()"
+                            style="width: 100%; margin-top: 12px;">Back to Dashboard</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Password Lab Section -->
+            <section class="content-section" id="password">
+                <div class="game-header">
+                    <h1 class="game-title-large">Password Strength Lab</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <h2 style="color: var(--color-primary); margin-bottom: 16px;">Test Your Password Strength</h2>
+                    <div class="password-input-group">
+                        <input type="text" id="passwordInput" class="password-input"
+                            placeholder="Type a password to test..." oninput="checkPasswordStrength()">
+                        <div class="strength-meter">
+                            <div class="strength-bar" id="strengthBar"></div>
+                        </div>
+                        <div class="strength-text" id="strengthText">Enter a password</div>
+                        <div class="strength-criteria">
+                            <div class="criteria-item" id="crit1">
+                                <div class="criteria-check">✓</div>
+                                <span>8+ chars</span>
+                            </div>
+                            <div class="criteria-item" id="crit2">
+                                <div class="criteria-check">✓</div>
+                                <span>Uppercase</span>
+                            </div>
+                            <div class="criteria-item" id="crit3">
+                                <div class="criteria-check">✓</div>
+                                <span>Numbers</span>
+                            </div>
+                            <div class="criteria-item" id="crit4">
+                                <div class="criteria-check">✓</div>
+                                <span>Special char</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 style="color: var(--color-primary); margin: 30px 0 16px 0;">Examples of Weak Passwords</h3>
+                    <div
+                        style="background: rgba(255, 107, 129, 0.08); border: 1px solid var(--color-error); border-radius: 10px; padding: 16px; margin-bottom: 20px;">
+                        <div style="font-family: monospace; color: var(--color-error); margin: 6px 0;">password123</div>
+                        <div style="font-family: monospace; color: var(--color-error); margin: 6px 0;">123456</div>
+                        <div style="font-family: monospace; color: var(--color-error); margin: 6px 0;">qwerty</div>
+                        <div style="font-family: monospace; color: var(--color-error); margin: 6px 0;">john2010</div>
+                        <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 10px;">These are very
+                            easy for attackers to guess or crack.</p>
+                    </div>
+
+                    <h3 style="color: var(--color-primary); margin: 30px 0 16px 0;">Example of a Strong Password</h3>
+                    <div
+                        style="background: rgba(125, 220, 139, 0.08); border: 1px solid var(--color-success); border-radius: 10px; padding: 16px;">
+                        <div style="font-family: monospace; color: var(--color-success); margin: 6px 0;">
+                            Tr0p!c@lSunset42#Mix</div>
+                        <p style="font-size: 12px; color: var(--color-text-secondary); margin-top: 10px;">Long, random,
+                            and mixes uppercase, lowercase, numbers, and special characters.</p>
+                    </div>
+
+                    <div
+                        style="background: rgba(70, 194, 184, 0.08); border: 1px solid rgba(70, 194, 184, 0.32); border-radius: 10px; padding: 16px; margin-top: 20px;">
+                        <strong>Tip:</strong> Use passphrases like "BlueCar-7-Elephant-Moon!" for strong and memorable
+                        passwords.
+                    </div>
+                </div>
+            </section>
+
+            <!-- Scenario Section -->
+            <section class="content-section" id="scenario">
+                <div class="game-header">
+                    <h1 class="game-title-large">Cyber Scenario Simulator</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen" id="scenarioContainer"></div>
+            </section>
+
+            <!-- Memory Match Section -->
+            <section class="content-section" id="memory">
+                <div class="game-header">
+                    <h1 class="game-title-large">Memory Match</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <div
+                        style="margin-bottom: 16px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+                        <div><span style="color: var(--color-text-secondary);">Matches: <strong
+                                    id="memoryMatches">0</strong>/8</span></div>
+                        <div><span style="color: var(--color-text-secondary);">Moves: <strong
+                                    id="memoryMoves">0</strong></span></div>
+                        <div><span style="color: var(--color-text-secondary);">⏱️ Time: <strong
+                                    id="memoryTime">0:00</strong></span></div>
+                    </div>
+                    <div class="game-board" id="memoryBoard"></div>
+                    <div id="memorySummary" style="display: none; animation: fadeIn 0.45s ease;">
+                        <h2 style="color: var(--color-primary); margin-bottom: 24px;">Game Complete!</h2>
+                        <div class="score-summary">
+                            <div class="score-box">
+                                <div class="score-label">Total Moves</div>
+                                <div class="score-value" id="memoryFinalMoves">0</div>
+                            </div>
+                            <div class="score-box">
+                                <div class="score-label">Time</div>
+                                <div class="score-value" id="memoryFinalTime" style="font-size: 22px;">0:00</div>
+                            </div>
+                            <div class="score-box">
+                                <div class="score-label">Speed Bonus</div>
+                                <div class="score-value" id="memorySpeedBonus"
+                                    style="font-size: 22px; color: var(--color-accent);">+0 🪙</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="resetMemory()"
+                            style="width: 100%; margin-top: 24px;">Play Again</button>
+                        <button class="btn btn-secondary" onclick="goToDashboard()"
+                            style="width: 100%; margin-top: 12px;">Back to Dashboard</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Leaderboard Section -->
+            <section class="content-section" id="leaderboard">
+                <div class="game-header">
+                    <h1 class="game-title-large">Global Leaderboard</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <p style="color: var(--color-text-secondary); margin-bottom: 18px;">Top 10 players based on scores
+                        on this device.</p>
+                    <table class="leaderboard-table" id="leaderboardTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 60px;">Rank</th>
+                                <th>Player</th>
+                                <th style="width: 120px;">Score</th>
+                                <th style="width: 150px;">Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboardBody"></tbody>
+                    </table>
+                    <button class="btn btn-secondary" onclick="goToDashboard()"
+                        style="width: 100%; margin-top: 24px;">Back to Dashboard</button>
+                </div>
+            </section>
+
+            <!-- Learn More Section -->
+            <section class="content-section" id="learn">
+                <div class="game-header">
+                    <h1 class="game-title-large">Learn Cybersecurity Basics</h1>
+                    <button class="back-btn" onclick="goToDashboard()">← Back</button>
+                </div>
+                <div class="game-screen">
+                    <p style="color: var(--color-text-secondary); margin-bottom: 24px;">Explore key cybersecurity terms
+                        explained in simple language.</p>
+                    <div class="terms-grid" id="termsGrid"></div>
+                    <button class="btn btn-secondary" onclick="goToDashboard()"
+                        style="width: 100%; margin-top: 24px;">Back to Dashboard</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p>© 2025 CyberSense GameHub. All rights reserved.</p>
+            <p class="site-credit">
+                Designed & developed by <span>Ali Siam</span> – Cyber Security Enthusiast
+            </p>
+            <p style="margin-top: 8px;">
+                <a href="https://lsbu-zeroday.netlify.app/" target="_blank" rel="noopener noreferrer"
+                    class="linktree-link">
+                    🔗 Visit LSBU ZeroDay Team
+                </a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
