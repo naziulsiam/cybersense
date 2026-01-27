@@ -938,6 +938,31 @@ header {
     text-shadow: var(--glow-primary);
 }
 
+.developer-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 700;
+    transition: var(--transition);
+    position: relative;
+    border-bottom: 2px solid transparent;
+}
+
+.developer-link:hover {
+    color: var(--color-accent);
+    border-bottom-color: var(--color-accent);
+    text-shadow: var(--glow-primary);
+}
+
+.developer-link::before {
+    content: "👨‍💻 ";
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.developer-link:hover::before {
+    opacity: 1;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .container {
